@@ -1,16 +1,16 @@
-package org.example.parkinglot1;
+package org.example.parkinglot1.servlets;
 
 import java.io.*;
 
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet(name = "aboutServlet", value = "/about-servlet")
-public class AboutServlet extends HttpServlet {
+@WebServlet(name = "helloServlet", value = "/hello-servlet")
+public class HelloServlet extends HttpServlet {
     private String message;
 
     public void init() {
-        message = "About Servlet";
+        message = "Hello World!";
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
