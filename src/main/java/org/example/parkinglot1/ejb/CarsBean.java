@@ -7,6 +7,7 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import org.example.parkinglot1.entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +34,21 @@ public class CarsBean {
             throw new EJBException(ex);
         }
     }
+    public CarDto findById(Long carId) {
+        Car car = entityManager.find(Car.class, carId);
+
+
+
+
+        return new CarDto(
+                car.getId(),
+                car.getLicensePlate(),
+                car.getParkingSpot(),
+                car.getOwner().getUsername()
+        );
+    }
+
+
     private List<CarDto> copyCarsToDto(List<Car> cars) {
         List<CarDto> carDos = new ArrayList<>();
 
@@ -48,4 +64,35 @@ public class CarsBean {
 
         return carDos;
     }
+    public void createCar(String licensePlate , String parkingSpot , Long userID) {
+        Car car = new Car();
+        car.setLicensePlate(licensePlate);
+        car.setParkingSpot(parkingSpot);
+
+User user = entityManager.find(User.class, userID);
+user.getCacrs().add(car);
+car.setOwner(user);
+entityManager.persist(car);
+
+    }
+   public void updateCar(Long carID, String licensePlate , String parkingSpot , Long userID) {
+
+LOG.info("updateCar");
+
+Car car = entityManager.find(Car.class, carID);
+car.setLicensePlate(licensePlate);
+car.setParkingSpot(parkingSpot);
+
+User oldUser = car.getOwner();
+oldUser.getCacrs().remove(car);
+
+User user = entityManager.find(User.class, userID);
+user.getCacrs().add(car);
+car.setOwner(user);
+
+   }
+
+
+
+
 }

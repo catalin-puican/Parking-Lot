@@ -25,7 +25,7 @@ public class Users extends HttpServlet {
         List<UserDto> users = usersBean.findAllUsers();
         request.setAttribute("users", users);
 
-        // Example attribute — remove or change if needed
+
         request.setAttribute("numberOfRegisteredUsers", users.size());
 
         request.getRequestDispatcher("/WEB-INF/pages/users.jsp")
@@ -35,6 +35,6 @@ public class Users extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Implement later if needed
+
     }
 }
