@@ -10,6 +10,7 @@ import jakarta.persistence.TypedQuery;
 import org.example.parkinglot1.entities.User;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -90,6 +91,14 @@ User user = entityManager.find(User.class, userID);
 user.getCacrs().add(car);
 car.setOwner(user);
 
+   }
+   public void deleteCar(Collection<Long> carIds) {
+        LOG.info("deleteCarsByIds");
+        for(Long carId:carIds){
+            Car car = entityManager.find(Car.class, carId);
+            entityManager.remove(car);
+
+        }
    }
 
 
