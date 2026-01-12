@@ -1,4 +1,4 @@
-package org.example.parkinglot1.servlets;
+package org.example.parkinglot1.servlets.cars;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
@@ -6,7 +6,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 import org.example.parkinglot1.common.UserDto;
 import org.example.parkinglot1.ejb.CarsBean;
-import org.example.parkinglot1.ejb.UsersBean;
+import org.example.parkinglot1.ejb.UserBean;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,7 +14,7 @@ import java.util.List;
 @WebServlet(name = "AddCar", value = "/AddCar")
 public class AddCar extends HttpServlet {
     @Inject
-    UsersBean usersBean;
+    UserBean usersBean;
 
     @Inject
     CarsBean carsBean;
@@ -24,7 +24,7 @@ public class AddCar extends HttpServlet {
             ServletException, IOException {
         List<UserDto> users = usersBean.findAllUsers();
         request.setAttribute("users", users);
-        request.getRequestDispatcher("/WEB-INF/pages/addCar.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/cars/addCar.jsp").forward(request, response);
     }
 
     @Override

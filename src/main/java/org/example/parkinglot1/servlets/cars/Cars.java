@@ -1,7 +1,5 @@
-package org.example.parkinglot1.servlets;
+package org.example.parkinglot1.servlets.cars;
 
-import jakarta.annotation.security.DeclareRoles;
-import jakarta.ejb.EJB;
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -11,7 +9,6 @@ import org.example.parkinglot1.ejb.CarsBean;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 @ServletSecurity(value = @HttpConstraint(rolesAllowed = {"READ_CARS"}),
         httpMethodConstraints = {@HttpMethodConstraint(value = "POST", rolesAllowed = {"WRITE_CARS"})})
@@ -26,7 +23,7 @@ public class Cars extends HttpServlet {
         List<CarDto> cars = carsBean.findAllCars();
         request.setAttribute("cars", cars);
         request.setAttribute("numberOfFreeParkingSpots", 10);
-        request.getRequestDispatcher("/WEB-INF/pages/cars.jsp").forward(request,response);
+        request.getRequestDispatcher("/WEB-INF/pages/cars/cars.jsp").forward(request,response);
     }
 
     @Override

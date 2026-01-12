@@ -1,4 +1,4 @@
-package org.example.parkinglot1.servlets;
+package org.example.parkinglot1.servlets.cars;
 
 import jakarta.inject.Inject;
 import jakarta.servlet.*;
@@ -7,7 +7,7 @@ import jakarta.servlet.annotation.*;
 import org.example.parkinglot1.common.CarDto;
 import org.example.parkinglot1.common.UserDto;
 import org.example.parkinglot1.ejb.CarsBean;
-import org.example.parkinglot1.ejb.UsersBean;
+import org.example.parkinglot1.ejb.UserBean;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 public class EditCar extends HttpServlet {
 
     @Inject
-    UsersBean usersBean;
+    UserBean usersBean;
 
     @Inject
     CarsBean carsBean;
@@ -31,7 +31,7 @@ public class EditCar extends HttpServlet {
         CarDto car = carsBean.findById(carId);
         request.setAttribute("car", car);
 
-        request.getRequestDispatcher("/WEB-INF/pages/editCar.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/pages/cars/editCar.jsp").forward(request, response);
     }
 
     @Override
