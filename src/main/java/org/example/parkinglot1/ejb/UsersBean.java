@@ -1,5 +1,6 @@
 package org.example.parkinglot1.ejb;
 
+import jakarta.inject.Inject;
 import org.example.parkinglot1.common.UserDto;
 import org.example.parkinglot1.entities.User;
 import jakarta.ejb.EJBException;
@@ -7,15 +8,18 @@ import jakarta.ejb.Stateless;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
+import org.example.parkinglot1.entities.UserGroup;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.logging.Logger;
 
 @Stateless
 public class UsersBean {
     private static final Logger LOG = Logger.getLogger(UsersBean.class.getName());
-
+@Inject
+private PasswordBean passwordBean;
     @PersistenceContext
     EntityManager entityManager;
 
@@ -47,5 +51,24 @@ public class UsersBean {
         }
 
         return dtos;
+    }
+
+    public void createUser(String username, String email, String password, Collection<String> groups) {
+        LOG.info("createUser");
+        User newUser = new User();
+        newUser.setUsername(username);
+        newUser.setEmail(email);
+        newUser.setPassword(passwordBean.convertToSha256(password));
+        entityManager.persist(newUser);
+        assignGroupsToUser(username, groups);
+    }
+    private void assignGroupsToUser(String username, Collection<String> groups) {
+        LOG.info("assignGroupsToUser");
+        for (String group : groups) {
+            UserGroup userGroup = new UserGroup();
+            userGroup.setUsername(username);
+            userGroup.setUserGroup(group);
+            entityManager.persist(userGroup);
+        }
     }
 }

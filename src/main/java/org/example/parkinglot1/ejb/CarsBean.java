@@ -71,7 +71,7 @@ public class CarsBean {
         car.setParkingSpot(parkingSpot);
 
 User user = entityManager.find(User.class, userID);
-user.getCacrs().add(car);
+user.getCars().add(car);
 car.setOwner(user);
 entityManager.persist(car);
 
@@ -85,10 +85,10 @@ car.setLicensePlate(licensePlate);
 car.setParkingSpot(parkingSpot);
 
 User oldUser = car.getOwner();
-oldUser.getCacrs().remove(car);
+oldUser.getCars().remove(car);
 
 User user = entityManager.find(User.class, userID);
-user.getCacrs().add(car);
+user.getCars().add(car);
 car.setOwner(user);
 
    }

@@ -2,7 +2,9 @@ package org.example.parkinglot1.entities;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -46,19 +48,36 @@ private String password;
     }
 
     @OneToMany(mappedBy = "owner", orphanRemoval = true)
-    private Set<Car> cacrs = new LinkedHashSet<>();
+    private Set<Car> cars = new LinkedHashSet<>();
+    @ManyToMany
+    @JoinTable(
+            name = "user_usergroups",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "usergroup_id")
+    )
 
+    private List<UserGroup> userGroups = new ArrayList<>();
+
+    public List<UserGroup> getUserGroups() {
+        return userGroups;
+    }
+
+    public void setUserGroups(List<UserGroup> userGroups) {
+        this.userGroups = userGroups;
+    }
     public void setEmail(String email) {
         this.email = email;
     }
 
     private String email;
 
-    public Set<Car> getCacrs() {
-        return cacrs;
+    public Set<Car> getCars() {
+        return cars;
     }
 
-    public void setCacrs(Set<Car> cacrs) {
-        this.cacrs = cacrs;
+    public void setCars(Set<Car> cars) {
+        this.cars = cars;
     }
+
+
 }
